@@ -25,11 +25,26 @@ abstract class BaseRequest {
     }
     //http和https切换
     if (useHttps) {
-      uri = Uri.https(authority(), pathStr, pathParams);
+      uri = Uri.https(authority(), pathStr, params);
     } else {
-      uri = Uri.http(authority(), pathStr, pathParams);
+      uri = Uri.http(authority(), pathStr, params);
     }
     print("url:${uri.toString()}");
     return uri.toString();
+  }
+
+  bool needLogin();
+  Map<String, String> params = Map();
+  //添加参数
+  BaseRequest add(String k, Object v) {
+    params[k] = v.toString();
+    return this;
+  }
+
+  Map<String, dynamic> header = Map();
+  //添加header
+  BaseRequest addHeader(String k, Object v) {
+    header[k] = v.toString();
+    return this;
   }
 }
